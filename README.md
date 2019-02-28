@@ -2,9 +2,9 @@
 
 Le but de ce tutoriel est de coder une blockchain depuis zéro pour en comprendre les mécanismes. Cette blockchain sera très loin d'une blockchain de production mais permettra d'illustrer les différentes mécaniques la constituant. Les notions et les problématiques seront introduites au fur et à mesure de la progression. Certaines seront *un peu* simplifiées.
 
-Le code se fait en Javascript pour permettre au plus grand nombre de réaliser ce tutoriel et parce que c'est le langage de programmation que j'utilise quotidiennement :D. L'environnement utilisé est Node.js (https://nodejs.org/fr/) en version 10 avec npm pour gérer les dépendances. Je pars du principe que vous savez coder dans ce langage et utiliser git.
+Le code se fait en Javascript pour permettre au plus grand nombre de réaliser ce tutoriel et parce que c'est le langage de programmation que j'utilise quotidiennement :D. L'environnement utilisé pour l'écriture de ce sujet est Node.js (https://nodejs.org/fr/) en version 11 avec npm pour gérer les dépendances mais il doit fonctionner à partir de la version 8. Je pars du principe que vous savez coder dans ce langage et utiliser git.
 
-Pour écrire ce tutoriel, je me suis inspiré de la suite d'article de Kass sur Medium qui réalise une blockchaine en Java : https://medium.com/programmers-blockchain/create-simple-blockchain-java-tutorial-from-scratch-6eeed3cb03fa.
+Pour écrire ce tutoriel, je me suis inspiré de la suite d'article de Kass sur Medium qui réalise une blockchain en Java : https://medium.com/programmers-blockchain/create-simple-blockchain-java-tutorial-from-scratch-6eeed3cb03fa.
 
 ## Cloner ce dépôt
 
@@ -28,9 +28,9 @@ J'ai écrit le fichier `index.js` suivant :
 ```Javascript
 const Block = require("./Block");
 
-const first = new Block(null, "First !");
-const second = new Block(first.id, "Second :)");
-const third = new Block(second.id, "Vous commencez à voir le principe ?");
+const first  = new Block(null     , "First !");
+const second = new Block(first.id , "Second :)");
+const third  = new Block(second.id, "Vous commencez à voir le principe ?");
 
 console.log([first, second, third]);
 ```
@@ -39,24 +39,24 @@ J'ai aussi commencé à écrire le fichier `Block.js` que vous devez compléter.
 
 Quand c'est fini, dans un terminal placé dans ce dossier : `node ./index.js`. Vous devriez voir quelque chose comme cela :
 
-```Javascript
-[ Block {
-    id: <xxxxxx>,
-    previous: null,
-    data: 'First !'},
-  Block {
-    id: <yyyyyyy>,
-    previous: <xxxxxx>,
-    data: 'Second :)'},
-  Block {
-    id: <zzzzzzzz>,
-    previous: <yyyyyyy>,
-    data: 'Vous commencez à voir le principe ?'} ]
+```
+[ Block<
+       id: <xxxxxx>
+       prev: null
+       val: 'First !' >,
+  Block<
+       id: <yyyyyy>
+       prev: <xxxxxx>
+       val: 'Second :)' >,
+  Block<
+       id: <zzzzzz>
+       prev: <yyyyyy>
+       val: 'Vous commencez à voir le principe ?' > ]
 ```
 
 C'est bon ? Magnifique ! Vous avez une première blockchain ! Bon, par contre, elle n'est  pas fonctionnelle... Quand un block est ajouté dans la Blockchain, il n'est plus modifiable. Ici, rien ne vous empêche de modifier ce que vous voulez.
 
-Par exemple, complétez le code d'index.js modifiant les données du troisième block.
+Par exemple, complétez le code d'index.js en modifiant les données du troisième block.
 
 ## Prenons un peu de hash
 
@@ -91,51 +91,46 @@ Une idée ?
 
 Cool !
 
-On va calculer l'empreinte du block avec cette fonction et on va utiliser cette empreinte comme identifiant du block ! Si on modifie le block, son empreinte change donc son `id` change ! Mais cette `id` est utilisé dans le block suivant, ce qui modifie son empreinte. Et ainsi de suite jusqu'au dernier block de la chaîne.
+On va calculer l'empreinte du block avec cette fonction et on va utiliser cette empreinte comme identifiant du block. Si on modifie le block, son empreinte change donc son `id` change ! Mais cette `id` est utilisé dans le block suivant, ce qui modifie son empreinte. Et ainsi de suite jusqu'au dernier block de la chaîne. On va tester plus loin.
 
-La fonction suivante prend en entrée une chaine de caractère et retourne l'empreinte correspondante.
+La fonction suivante prend en entrée une chaîne de caractère et retourne l'empreinte correspondante.
 
 ```Javascript
 const crypto = require('crypto');
 
-function getHash(data) {
-  return crypto.createHash('sha256').update(data, 'utf8').digest('hex');
+function getHash(unMotDoux) {
+  return crypto.createHash('sha256').update(unMotDoux, 'utf8').digest('hex');
 }
 ```
 
-Modifier la class Block pour lui ajouter la fonction getHash qui calcule l'empreinte correspondant au block. Pour calculer cette empreinte, vous devez utiliser l'identifiant du block précédent, la date du block et les données contenu dans le block.
+Modifier la class Block pour lui ajouter la fonction getHash qui calcule l'empreinte correspondant au block. Pour calculer cette empreinte, vous devez utiliser l'identifiant du block précédent et les données contenues dans le block.
+
+Exemple de concaténation :
 
 ```Javascript
-const toHash = `${previous}${data}${date}`;
+const toHash = `${previous}${data}`;
 ```
 
 Vous obtenez exactement ça :
 
-```Javascript
-[ Block {
-    previous: null,
-    data: 'First !',
-    id:
-     'a41f8877855bd3d91519bc73a6d77963d7034b8275252a55ee3dd775870f8cac' },
-  Block {
-    previous:
-     'a41f8877855bd3d91519bc73a6d77963d7034b8275252a55ee3dd775870f8cac',
-    data: 'Second :)',
-    id:
-     'e5c9f1816fb8bc23f361ae89e91681104b78832fe4aefef3eba8deeb3dbd5d95' },
-  Block {
-    previous:
-     'e5c9f1816fb8bc23f361ae89e91681104b78832fe4aefef3eba8deeb3dbd5d95',
-    data: 'Vous commencez à voir le principe ?',
-    id:
-     'e78126cef62cd6e82a540a44fb3df71faab249ec4f1893173063aedca589aa03' } ]
+```
+[ Block<
+       id: '9b1d3da5be217ffa1622466bf7c2e5fea827c4ee7c32af170da00f89ed49356d'
+       prev: null
+       val: 'First !' >,
+  Block<
+       id: 'ffb3dad005c79eb32345f2506189368ef5556dbacd05c8b94d59907ce64bd722'
+       prev: '9b1d3da5be217ffa1622466bf7c2e5fea827c4ee7c32af170da00f89ed49356d'
+       val: 'Second :)' >,
+  Block<
+       id: '66d623f52b392c4ddec3129a25a9e5b992d71b062aff0d838fec16cda7527dcf'
+       prev: 'ffb3dad005c79eb32345f2506189368ef5556dbacd05c8b94d59907ce64bd722'
+       val: 'Vous commencez à voir le principe ?' > ]
 ```
 
-###### Que pouvez-vous dire sur l'ordre des champs par rapport à l'affichage précédent ? Pourquoi ?
+Maintenant, essayez de modifier le premier élément de la chaîne.
 
-Maintenant, essayez de modifier le premier élément de la chaine.
-
-###### Comparez. Qu'est-ce qu'il se passe ?
+###### Comparez avec l'exécution précédente. Qu'est-ce qu'il se passe ?
 
 ## Suite
 

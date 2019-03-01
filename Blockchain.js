@@ -1,7 +1,9 @@
 const crypto = require('crypto');
+const { BlockchainTool } = require('./tools');
 
-module.exports = class Blockchain {
+module.exports = class Blockchain extends BlockchainTool {
   constructor() {
+    super()
     this.chain = [];
   }
 
@@ -19,5 +21,6 @@ module.exports = class Blockchain {
 
   isValid() {
     // Modifier ici.
+    return false;
   }
 }

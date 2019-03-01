@@ -56,7 +56,7 @@ Quand c'est fini, dans un terminal placé dans ce dossier : `node ./index.js`. V
 
 C'est bon ? Magnifique ! Vous avez une première blockchain ! Bon, par contre, elle n'est  pas fonctionnelle... Quand un block est ajouté dans la Blockchain, il n'est plus modifiable. Ici, rien ne vous empêche de modifier ce que vous voulez.
 
-Par exemple, complétez le code d'index.js en modifiant les données du troisième block.
+###### Par exemple, complétez le code d'index.js en modifiant les données du troisième block.
 
 ## Prenons un peu de hash
 
@@ -131,6 +131,12 @@ Vous obtenez exactement ça :
 Maintenant, essayez de modifier le premier élément de la chaîne.
 
 ###### Comparez avec l'exécution précédente. Qu'est-ce qu'il se passe ?
+
+## Passer entre les mailles du filet
+
+Modifiez la fonction `isValid` pour qu'elle vérifie que l'id du block correspond à son contenu.
+
+###### Comme précédemment, complétez le code d'index.js en modifiant les données du troisième block. Que ce passe t'il ?
 
 ## Suite
 

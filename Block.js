@@ -17,4 +17,8 @@ module.exports = class Block extends BlockTool {
     this.previous = previous;
     //...
   }
+
+  isValid() {
+    return true;
+  }
 }

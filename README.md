@@ -2,9 +2,7 @@
 
 ## Je valide !
 
-Maintenant que l'on peut vérifier si notre Blockchain est valide, faisons-le. Dans `Block.js`, ajoutez une fonction `isValid` qui renvoie un booléen qui indique si l'id du block est valide.
-
-J'ai rajouté un nouveau fichier `Blockchain.js` et modifié `index.js`. Dans `Blockchain.js`, écrivez la fonction `isValid`. Pour chaque block, elle doit faire deux choses : vérifier que le block est valide et que l'identifiant du block précédent correspond bien.
+Maintenant que l'on peut vérifier si un block est valide, vérifions que notre Blockchain l'est aussi. Faisons-le ! J'ai rajouté un nouveau fichier `Blockchain.js` et modifié `index.js`. Dans `Blockchain.js`, écrivez la fonction `isValid`. Pour chaque block, elle doit faire deux choses : vérifier que le block est valide et que l'identifiant du block précédent correspond bien.
 
 Bon, vous êtes en mesure de vérifier que la chaîne est valide, bravo !
 

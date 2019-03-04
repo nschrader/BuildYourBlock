@@ -2,13 +2,19 @@ const crypto = require('crypto');
 const { BlockchainTool } = require('./tools');
 
 module.exports = class Blockchain extends BlockchainTool {
-  constructor() {
+  constructor(difficulty) {
     super()
     this.chain = [];
+    this.difficulty = difficulty;
   }
 
   add(block) {
-    this.chain.push(block);
+    if (this.chain.length == 0) {
+      block.previous = null;
+    } else {
+      block.previous = this.chain[this.chain.length - 1].id;
+    }
+    this.chain.push(block.mine(this.difficulty));
   }
 
   last() {
@@ -20,7 +26,16 @@ module.exports = class Blockchain extends BlockchainTool {
   }
 
   isValid() {
-    // Modifier ici.
-    return false;
+    var prev = null;
+    for (var b of this.chain) {
+      if (!b.isValid()) {
+        return false;
+      }
+      if (prev != null && prev.id != b.previous) {
+        return false;
+      }
+      prev = b;
+    }
+    return true;
   }
 }

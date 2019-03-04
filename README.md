@@ -8,11 +8,9 @@ Bon, vous êtes en mesure de vérifier que la chaîne est valide, bravo !
 
 ## Je ne suis pas seul
 
-Maintenant, quand vous utilisez une Blockchain, vous n'êtes pas tout seul. Vous êtes dans une application distribuée avec tous les problèmes qui peuvent être dûs au réseau ou à plusieurs personnes qui créent un block en même temps. Il faut un algorithme de consensus pour savoir quels blocks sont ajoutés dans la chaîne.
+Maintenant, quand vous utilisez une Blockchain, vous n'êtes pas tout seul. Vous êtes dans une application distribuée avec tous les problèmes qui peuvent être dûs au réseau ou à plusieurs personnes qui créent un block en même temps. Il faut un algorithme pour savoir quels blocks sont ajoutés dans la chaîne. Avez-vous une idée de comment faire ?
 
-Une des propriétés de cette algorithme de consensus est de garder la chaîne la plus longue. Imaginez maintenant un utilisateur modifiant un vieux block et recalculant tous les blocks depuis et en ajoutant une dizaine d'autres. Sa chaîne remplacera l'ancienne qui est légitime mais ne pas avoir cette propriété pose plein d'autres problèmes. Avez-vous une idée de comment faire ?
-
-La solution s'appelle la preuve de travail. Cette technique consiste à faire dépenser à la personne qui veut ajouter un block beaucoup de puissance de calcul et donc du temps et de l'argent. L'attaquant devra donc avoir plus de puissance que l'ensemble des autres membres réunies pour pouvoir modifier la chaine.
+La solution s'appelle la preuve de travail. Cette technique consiste à faire dépenser à la personne qui veut ajouter un block beaucoup de puissance de calcul et donc du temps et de l'argent pour avoir une chance aléatoire d'ajouter le block. Le but dans le cas de Bitcoin est d'ajouter un block toutes les 10 min. Cela crée un ordonnancement sur l'ajout des blocks sans tiers de confiance.
 
 ## Minons du hash
 
@@ -28,7 +26,7 @@ Indice : c'est une question de bruit.
 
 On rajoute du bruit tout simplement ! Pour cela, on ajoute au block un élément appelé `nonce` initialisé à 0 et incrémenté de 1 après chaque essai invalide. Cette opération de recherche d'un hash valide s'appelle le minage.
 
-Dans la class Block, ajoutez une propriété `nonce` et une fonction `miner` qui prend en paramètre le nombre de zéros qu'il faut en début d'empreinte. N'oubliez pas du modifier la fonction `getHash` pour qu'elle prenne en compte le `nonce`. Et je suis sympa, je vous donne le lien vers deux fonctions utiles en JS :
+Dans la class Block, ajoutez une propriété `nonce` et une fonction `miner` qui prend en paramètre le nombre de zéros qu'il faut en début d'empreinte. N'oubliez pas de modifier la fonction `getHash` pour qu'elle prenne en compte le `nonce`. Et je suis sympa, je vous donne le lien vers deux fonctions utiles en JS :
 
 * repeat : https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/String/repeat
 * startsWith : https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/String/startsWith

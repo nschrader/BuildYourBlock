@@ -133,4 +133,15 @@ const transaction = new Transaction(
 
 transaction.sign(walletA);
 
-console.log("Transaction valide :", transaction.verify());
+const block = new Block(
+  third.id,
+  new Date(),
+  transaction
+);
+
+block.miner(DIFFICULTY)
+blockchain.add(block);
+console.log("isValid:", blockchain.isValid(DIFFICULTY));
+
+console.log(blockchain);
+console.log("Transaction valide :", blockchain.last().data.verify());

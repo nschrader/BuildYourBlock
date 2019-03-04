@@ -1,4 +1,9 @@
 const NodeRSA = require('node-rsa');
+const Block = require('./Block');
+
+function generateNonce() {
+  return Math.floor(Math.random()*1000000000);
+}
 
 module.exports = class Transaction {
   constructor(
@@ -11,6 +16,7 @@ module.exports = class Transaction {
     this.dstPubKey = destinationPublicKey;
     this.montant = montant;
     this.signature = signature;
+    this.nonce = generateNonce();
   }
 
   sign(srcWallet) {

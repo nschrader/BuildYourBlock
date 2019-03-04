@@ -3,7 +3,7 @@ const Blockchain = require('./Blockchain');
 const Wallet = require('./Wallet')
 const Transaction = require('./Transaction')
 
-const DIFFICULTY = 5;
+const DIFFICULTY = 4;
 
 const blockchain = new Blockchain();
 
@@ -126,8 +126,8 @@ const verifyB = walletB.verify(text, signatureB);
 console.log('Verify B : ', verifyB);
 
 const transaction = new Transaction(
-  walletA.publicKey,
-  walletB.publicKey,
+  walletA.pubKey,
+  walletB.pubKey,
   1000
 );
 

@@ -6,11 +6,20 @@ module.exports = class Transaction {
     destinationPublicKey,
     montant,
     signature = null
-  ) {}
+  ) {
+    this.srcPubKey = sourcePublicKey;
+    this.dstPubKey = destinationPublicKey;
+    this.montant = montant;
+    this.signature = signature;
+  }
 
-  sign(privateKey) {}
+  sign(srcWallet) {
+    this.signature = srcWallet.sign(this.srcPubKey + this.dstPubKey + this.montant);
+  }
 
   setSignature(signature) {}
 
-  verify() {}
+  verify() {
+    return this.srcPubKey.verify(this.srcPubKey + this.dstPubKey + this.montant, this.signature);
+  }
 }

@@ -1,8 +1,12 @@
 const { BlockTool } = require('./tools');
+const crypto = require('crypto');
 
-// Je mets ça là ... au cas où ...
-function generateId() {
-  return Math.floor(Math.random()*1000000000);
+function getHash(data) {
+  return crypto.createHash('sha256').update(data, 'utf8').digest('hex');
+}
+
+function generateId(date, previous, data) {
+  return getHash(date + previous + data)
 }
 
 // Vous n'avez pas à comprendre BlockTool.
@@ -15,7 +19,9 @@ module.exports = class Block extends BlockTool {
   constructor(previous, data) {
     super()
     this.previous = previous;
-    //...
+    this.data = data;
+    this.date = new Date();
+    this.id = generateId(this.date, previous, data);
   }
 
   isValid() {

@@ -28,7 +28,7 @@ const RYTHME = 10;
 
 class Simulation {
   constructor() {
-    this.DIFFICULTY = 6;
+    this.DIFFICULTY = 3;
 
     // premier block de la chaîne.
     const genesis = new Block(null, "I am groot!");

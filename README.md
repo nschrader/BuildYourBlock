@@ -39,6 +39,20 @@ Modifier la fonction de vérification pour qu'elle vérifie que la difficulté e
 
 Maintenant, votre Blockchain est beaucoup plus difficile à attaquer !
 
+## Trouvons le bon rythme
+
+Une difficulté de 5, c'est bien mais ça semble un peu arbitraire comme valeur. Pour notre blockchain, j'aimerai qu'il y ai un block toutes les 10 secondes qui soit ajouté à la blockchain. Autre contrainte, si tous les participants ont la même puissance de calcule, que le participant soit tiré aléatoirement.
+
+J'ai ajouté un fichier `rythme.js` qui contient un code permettant de simuler une blockchain avec 5 participants ayant la même puissance de calcule. Essayer de comprendre ce que fait ce code. Vérifier que votre code fonctionne correctement en exécutant le fichier : `node rythme.js`.
+
+###### Observez la simulation. Que pouvez-vous dire sur le temps de calcule d'un block ?
+
+###### Essayez de changer la difficulté, que ce passe-t'il sur le temps de calcule ?
+
+###### Quand vous exécutez `index.js` combien de temps il faut pour miner un block ? Y-a-t'il une différence ? Pourquoi ?
+
+###### Sur votre machine, quelle est la bonne valeur de la difficulté ?
+
 ## Suite
 
 Mettre du texte, c'est bien. Échanger de la valeur, c'est mieux : `git checkout etape-3`.

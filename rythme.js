@@ -9,7 +9,8 @@ class Participant {
 
   // Change le block que le participant essaie de miner.
   generateBlock(previous) {
-    this.block = new Block(previous.id, this.name);
+    this.block = new Block(this.name);
+    this.block.previous = previous.id;
   }
 
   // Simule le calcule d'un hash et retourne le block si valide.
@@ -26,12 +27,16 @@ class Participant {
 
 const RYTHME = 10;
 
+/* La puissance de calcul est divisé par le nombre de participants,
+ * donc la moyenne est 5 fois plus grand par block.
+ */
+
 class Simulation {
   constructor() {
-    this.DIFFICULTY = 3;
+    this.DIFFICULTY = 5;
 
     // premier block de la chaîne.
-    const genesis = new Block(null, "I am groot!");
+    const genesis = new Block("I am groot!");
     this.blockchain = new Blockchain();
     this.blockchain.add(genesis);
 

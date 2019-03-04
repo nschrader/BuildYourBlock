@@ -1,14 +1,6 @@
 const { BlockTool } = require('./tools');
 const crypto = require('crypto');
 
-function getHash(data) {
-  return crypto.createHash('sha256').update(data, 'utf8').digest('hex');
-}
-
-function generateBlockId(block) {
-  return getHash(block.date + block.previous + block.data + block.nonce)
-}
-
 // Vous n'avez pas à comprendre BlockTool.
 // Cette class vient en support du sujet.
 // Si vous avez besoin de débugguer,
@@ -16,7 +8,7 @@ function generateBlockId(block) {
 module.exports = class Block extends BlockTool {
 
   // Complétez le constructeur
-  constructor(previous, data) {
+  constructor(data) {
     super()
     this.previous = null;
     this.data = data;
@@ -25,14 +17,20 @@ module.exports = class Block extends BlockTool {
     this.id = null;
   }
 
-  isValid() {
-    return generateBlockId(this) == this.id;
+  getHash() {
+    var data = this.date + this.previous + this.data + this.nonce;
+    return crypto.createHash('sha256').update(data, 'utf8').digest('hex');
+  }
+
+  isValid(zeros) {
+    var proof = '0'.repeat(zeros);
+    return this.getHash() == this.id && this.id.startsWith(proof);
   }
 
   mine(zeros) {
     var proof = '0'.repeat(zeros);
     while (true) {
-      this.id = generateBlockId(this);
+      this.id = this.getHash();
       if (this.id.startsWith(proof)) {
         break;
       } else {

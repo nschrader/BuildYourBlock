@@ -9,10 +9,10 @@ module.exports = class Blockchain extends BlockchainTool {
   }
 
   add(block) {
-    if (this.chain.length == 0) {
+    try {
+      block.previous = this.last().id;
+    } catch (e) {
       block.previous = null;
-    } else {
-      block.previous = this.chain[this.chain.length - 1].id;
     }
     this.chain.push(block.mine(this.difficulty));
   }
@@ -27,6 +27,7 @@ module.exports = class Blockchain extends BlockchainTool {
 
   isValid() {
     var prev = null;
+    var proof = '0'.repeat(this.difficulty);
     for (var b of this.chain) {
       if (!b.isValid()) {
         return false;

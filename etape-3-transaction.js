@@ -10,29 +10,32 @@ const walletAlice = new Wallet(PRIVATE_KEY_ALICE);
 // Il faut une transaction pour commencer
 // Nous verrons les diffèrentes solutions pour créer de la monnaie plus tard.
 const transactionGenesis = new Transaction([], [
-  new TxOut(5000, PUBLIC_KEY_ALICE)
+  new Output(5000, walletAlice.getPublicKey())
 ])
 
 // Transactions non dépensées
 // Liste tous les TxOuts utilisables
-const unspentOutputs = [
+var unspentOutputs = [
   {tx: transactionGenesis, index: 0}
 ]
 
 // Le but est de transfèrer 1000 BYB de Alice à Bob.
 // Pour commencer, implémentez les constructeurs de Transaction, Input et Output.
 
-const input = new Input(/* ... */);
-const output1 = new Output(/* ... */);
-const output2 = new Output(/* ... */);
+const input = new Input(transactionGenesis, 0, walletAlice.getPublicKey());
+const output1 = new Output(1000, PUBLIC_KEY_BOB);
+const output2 = new Output(4000, walletAlice.getPublicKey());
 
 const inputs = [input];
 const outputs = [output1, output2];
 
-const Send1000AliceToBob = new Transaction(/* ...*/);
+const Send1000AliceToBob = new Transaction(inputs, outputs);
 
 // Mettre à jour unspentOutputs en enlevant les outputs utilisés
 // Et en ajoutant les nouveaux.
+unspentOutputs = [
+  {tx: Send1000AliceToBob, index: 1}
+]
 
 // Implémentez cette fonction.
 const maTransaction = Transaction.buildSimpleTransaction(walletAlice, PUBLIC_KEY_BOB, 2000, unspentOutputs);

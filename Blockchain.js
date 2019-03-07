@@ -1,9 +1,7 @@
 const crypto = require('crypto');
-const { BlockchainTool } = require('./tools');
 
-module.exports = class Blockchain extends BlockchainTool {
+module.exports = class Blockchain {
   constructor() {
-    super()
     this.chain = [];
   }
 
@@ -19,9 +17,23 @@ module.exports = class Blockchain extends BlockchainTool {
     }
   }
 
-  // Retourne un boolean qui indique si la blockchain est valide
-  isValid(DIFFICULTY) {
-    // Modifier ici.
-    return false;
+  isValid(difficulty) {
+    const target = "0".repeat(difficulty);
+
+    return this.chain.reduce(function(isValid, block, index, chain) {
+      if (!isValid) {
+        return false;
+      } else if (block.id !== block.getHash()) {
+        return false;
+      } else if (!block.id.startsWith(target)) {
+        return false;
+      } else if (index === 0 && block.previous === null) {
+        return true;
+      } else if (block.previous !== chain[index - 1].id) {
+        return false;
+      } else {
+        return true;
+      }
+    }, true);
   }
 }
